@@ -187,7 +187,7 @@ function NFTDrop({ collection }: Props) {
           ) : claimedSupply === totalSupply?.toNumber() ? (
             <>SOLD OUT</>
           ) : !address ? (
-            <>Sign in to Mint</>
+            <>Sign in with metamask to Mint</>
           ) : (
             <span className="font-bold">Mint NFT ({priceInEth} ETH)</span>
           )}
