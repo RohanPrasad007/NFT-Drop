@@ -26,27 +26,6 @@ function NFTDrop({ collection }: Props) {
   const connectWithMetamask = useMetamask()
   const address = useAddress()
   const disconnect = useDisconnect()
-  useEffect(() => {
-    if (!nftDrop) return
-
-    const fetchNFTDropData = async () => {
-      setLoading(true)
-      const claimed = await nftDrop.getAllClaimed()
-      const total = await nftDrop.totalSupply()
-
-      setClaimedSupply(claimed.length)
-      setTotalSupply(total)
-      setLoading(false)
-    }
-
-    const fetchPrice = async () => {
-      const claimedCondititons = await nftDrop.claimConditions.getAll()
-      setPriceInEth(claimedCondititons?.[0].currencyMetadata.displayValue)
-    }
-
-    fetchNFTDropData()
-    fetchPrice()
-  }, [nftDrop])
 
   const mintNft = () => {
     if (!nftDrop || !address) return
@@ -158,39 +137,13 @@ function NFTDrop({ collection }: Props) {
           <h1 className="text-3xl font-bold lg:text-5xl lg:font-extrabold">
             {collection.title}
           </h1>
-          {loading ? (
-            <p className="pt-2 text-xl text-green-500">
-              Loading Supply Count...
-            </p>
-          ) : (
-            <p className="pt-2 text-xl text-green-500">
-              {claimedSupply} / {totalSupply?.toString()} NFT's Claimed
-            </p>
-          )}
-          {loading && (
-            <img
-              src="https://cdn.hackernoon.com/images/0*4Gzjgh9Y7Gu8KEtZ.gif"
-              alt="loading"
-            />
-          )}
         </div>
         {/* Mint button */}
         <button
           onClick={() => mintNft()}
-          disabled={
-            loading || claimedSupply === totalSupply?.toNumber() || !address
-          }
           className="mt-10 h-10 w-full rounded-full bg-red-600 font-bold text-white disabled:bg-gray-400"
         >
-          {loading ? (
-            <>Loading</>
-          ) : claimedSupply === totalSupply?.toNumber() ? (
-            <>SOLD OUT</>
-          ) : !address ? (
-            <>Sign in with metamask to Mint</>
-          ) : (
-            <span className="font-bold">Mint NFT ({priceInEth} ETH)</span>
-          )}
+          <span className="font-bold">Mint NFT (1.35 ETH)</span>
         </button>
       </div>
     </div>
